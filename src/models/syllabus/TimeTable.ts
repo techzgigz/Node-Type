@@ -3,44 +3,44 @@ import { Default, Enum, Groups, Property, Required } from "@tsed/schema";
 import{Lesson } from "src/models/syllabus/Lesson";
 
 @Model({ schemaOptions: { timestamps: true } })
-export class Topic {
+export class TimeTable {
   @Groups("!creation", "!updation")
   @ObjectID("id")
   _id: string;
 
-  @Ref(Lesson)
-  @Required()
-  lesson: Ref<Lesson>;
+//   @Ref(Lesson)
+//   @Required()
+//   lesson: Ref<Lesson>;
 
   @Property()
   @Required()
   @Trim()
-  topicName: string;
+  day: string;
 
   @Property()
   @Required()
   @Trim()
-  progress: number;
+  timeFrom: TimeRanges;
 
   @Property()
   @Required()
   @Trim()
-  scheduleDate: Date; 
+  timeTo: TimeRanges; 
 
   @Property()
   @Required()
   @Trim()
-  note: string; 
+  roomNumber: string; 
 
   @Property()
   @Required()
   @Trim()
-  studyMaterial: []; 
+  mode: string; 
 
   @Property()
   @Required()
   @Trim()
-  remark: string; 
+  position: number; 
 
   @Property()
   @Enum("active", "inactive")
