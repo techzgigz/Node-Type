@@ -7,7 +7,7 @@ import { EntityCreationUser } from "./PermissionsService";
 
 @Service()
 export class TopicService {
-  @Inject(Topic) private lesson: MongooseModel<Topic>;
+  @Inject(Topic) private Topic: MongooseModel<Topic>;
   @Inject() private eventEmitter: EventEmitterService;
 
   async find(id: string): Promise<Topic | null> {
@@ -16,7 +16,7 @@ export class TopicService {
   }
 
   async save(data: Topic, user: EntityCreationUser): Promise<Topic> {
-    const topic = new this.topic(data);
+    const topic = new this.Topic(data);
     await topic.save();
     this.eventEmitter.emit("entity.created", { user, moduleName: "Fee" });
     return topic;
@@ -37,10 +37,10 @@ export class TopicService {
 
   async query(options = {}): Promise<Topic[]> {
     options = objectDefined(options);
-    return this.topic.find(options).exec();
+    return this.Topic.find(options).exec();
   }
 
   async remove(id: string): Promise<Topic> {
-    return await this.topic.findById(id).remove().exec();
+    return await this.Topic.findById(id).remove().exec();
   }
 }
