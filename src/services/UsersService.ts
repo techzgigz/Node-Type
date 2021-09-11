@@ -1,4 +1,4 @@
-import { Service, Inject, $log } from "@tsed/common";
+import { Service, Inject } from "@tsed/common";
 import { MongooseModel } from "@tsed/mongoose";
 import { User } from "src/models/users/User";
 import { EventEmitterService } from "@tsed/event-emitter";
@@ -26,7 +26,7 @@ export class UsersService {
     }
   }
 
-  async find(id: string): Promise<User | null> {
+  async find(id: User["_id"]): Promise<User | null> {
     const user = await this.user.findById(id).exec();
 
     return user;
@@ -34,6 +34,18 @@ export class UsersService {
 
   async findOne(opts = {}): Promise<User | null> {
     const user = await this.user.findOne(opts).exec();
+
+    return user;
+  }
+
+  async findOrCreate(userObj: User): Promise<User> {
+    let user = await this.findOne({
+      email: userObj.email,
+    });
+
+    if (!user) {
+      user = await this.save(userObj);
+    }
 
     return user;
   }

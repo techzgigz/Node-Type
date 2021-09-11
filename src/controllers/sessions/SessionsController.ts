@@ -19,14 +19,14 @@ import {
   Summary,
 } from "@tsed/schema";
 import { AcceptRoles } from "src/decorators/AcceptRoles";
-import { Fee } from "src/models/fees/Fee";
-import { FeesService } from "src/services/FeesService";
+import { Session } from "src/models/sessions/Session";
+import { SessionsService } from "src/services/SessionsService";
 import { UsersService } from "src/services/UsersService";
 
-@Controller("/fees")
-export class FeesController {
+@Controller("/sessions")
+export class SessionsController {
   constructor(
-    private feesService: FeesService,
+    private sessionsService: SessionsService,
     private usersService: UsersService
   ) {}
 
@@ -34,55 +34,55 @@ export class FeesController {
   @Security("oauth_jwt")
   @Authorize("jwt")
   @AcceptRoles("admin")
-  @Summary("Return all Fees")
-  @Returns(200, Fee)
-  async getAllFees(@Req() request: Req): Promise<Fee[]> {
+  @Summary("Return all Sessions")
+  @Returns(200, Session)
+  async getAllSessions(@Req() request: Req): Promise<Session[]> {
     let query = {};
     if ((request.user as any).role !== "superadmin") {
       query = { _id: request.permissions?.readIds };
     }
-    return this.feesService.query(query);
+    return this.sessionsService.query(query);
   }
 
   @Get("/:id")
   @Security("oauth_jwt")
   @Authorize("jwt")
   @AcceptRoles("admin")
-  @Summary("Return Fee based on id")
-  @Returns(200, Fee)
-  async getFee(
+  @Summary("Return Session based on id")
+  @Returns(200, Session)
+  async getSession(
     @PathParams("id") id: string,
     @Req() request: Req
-  ): Promise<Fee | null> {
+  ): Promise<Session | null> {
     if (
       (request.user as any).role !== "superadmin" &&
       !request.permissions?.readIds?.includes(id)
     ) {
       throw new Error("You don't have sufficient permissions");
     }
-    return this.feesService.find(id);
+    return this.sessionsService.find(id);
   }
 
   @Post("/")
   @Security("oauth_jwt")
   @Authorize("jwt")
   @AcceptRoles("admin")
-  @Summary("Create new Fee")
-  @Returns(201, Fee)
-  async createFee(
+  @Summary("Create new Session")
+  @Returns(201, Session)
+  async createSession(
     @Req() request: Req,
-    @Description("Fee model")
+    @Description("Session model")
     @BodyParams()
     @Groups("creation")
-    data: Fee
-  ): Promise<Fee> {
+    data: Session
+  ): Promise<Session> {
     const user = await this.usersService.find(data.createdBy.toString());
     if (!user || user.role === "superadmin") {
       throw new Error(
         `User with id: ${data.createdBy} doesn't exist or is superadmin, use other role.`
       );
     }
-    return this.feesService.save(data, {
+    return this.sessionsService.save(data, {
       role: user.role,
       _id: user._id,
       adminId: user.adminId,
@@ -93,22 +93,22 @@ export class FeesController {
   @Security("oauth_jwt")
   @Authorize("jwt")
   @AcceptRoles("admin")
-  @Summary("Update Fee with id")
-  @Status(201, { description: "Updated Fee", type: Fee })
+  @Summary("Update Session with id")
+  @Status(201, { description: "Updated Session", type: Session })
   update(
     @PathParams("id") @Required() id: string,
-    @BodyParams() @Groups("updation") @Required() Fee: Fee
-  ): Promise<Fee | null> {
-    return this.feesService.update(id, Fee);
+    @BodyParams() @Groups("updation") @Required() Session: Session
+  ): Promise<Session | null> {
+    return this.sessionsService.update(id, Session);
   }
 
   @Delete("/:id")
   @Security("oauth_jwt")
   @Authorize("jwt")
   @AcceptRoles("admin")
-  @Summary("Remove a Fee")
+  @Summary("Remove a Session")
   @Status(204, { description: "No content" })
   async remove(@PathParams("id") id: string): Promise<void> {
-    await this.feesService.remove(id);
+    await this.sessionsService.remove(id);
   }
 }
