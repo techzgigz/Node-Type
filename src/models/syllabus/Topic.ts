@@ -1,5 +1,17 @@
 import { Model, ObjectID, Ref, Trim } from "@tsed/mongoose";
-import { Default, Enum, Groups, Property, Required } from "@tsed/schema";
+import {
+  Default,
+  Enum,
+  Groups,
+  MaxLength,
+  MinLength,
+  Property,
+  Required,
+  Minimum,
+  Maximum,
+  Format,
+
+} from "@tsed/schema";
 import{Lesson } from "src/models/syllabus/Lesson";
 
 @Model({ schemaOptions: { timestamps: true } })
@@ -14,18 +26,25 @@ export class Topic {
 
   @Property()
   @Required()
+  @MinLength(3)
+  @MaxLength(50)
   @Trim()
-  topicName: string;
+  name: string;
 
   @Property()
   @Required()
+  @Minimum(0)
+  @Maximum(100)
   @Trim()
-  progress: number;
+  progress: Number;
 
+  @Format("date-time")
+  @Default(Date.now)
+  date: Date = new Date();
+  
   @Property()
-  @Required()
-  @Trim()
-  scheduleDate: Date; 
+  @Default(false)
+  completed: boolean;
 
   @Property()
   @Required()

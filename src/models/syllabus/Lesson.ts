@@ -1,31 +1,43 @@
 import { Model, ObjectID, Ref, Trim } from "@tsed/mongoose";
-import { Default, Enum, Groups, Property, Required } from "@tsed/schema";
+import {
+  Default,
+  Enum,
+  Groups,
+  MaxLength,
+  MinLength,
+  Property,
+  Required,
+} from "@tsed/schema";
 import { Medium } from "../mediums/Medium";
-
+import { Grade} from "../grades/Grades";
+import {Subject} from "../subjects/Subject"
 @Model({ schemaOptions: { timestamps: true } })
 export class Lesson {
   @Groups("!creation", "!updation")
   @ObjectID("id")
   _id: string;
 
-  @Ref(Medium)
+  @Ref(() => Medium)
   @Required()
   medium: Ref<Medium>;
 
-  @Property()
+
+  @Ref(() => Subject)
   @Required()
-  @Trim()
-  class: string;
+  subject: Ref<Subject>;
+
+  
+  @Ref(() => Grade)
+  @Required()
+  grade: Ref<Grade>;
+  
 
   @Property()
   @Required()
+  @MinLength(3)
+  @MaxLength(50)
   @Trim()
-  subject: string;
-
-  @Property()
-  @Required()
-  @Trim()
-  teacher: string; 
+  name: string;
 
   @Property()
   @Enum("active", "inactive")
