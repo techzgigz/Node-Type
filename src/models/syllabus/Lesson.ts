@@ -33,11 +33,12 @@ export class Lesson {
   
 
   @Property()
-  @Required()
-  @MinLength(3)
-  @MaxLength(50)
   @Trim()
   name: string;
+
+  @Property()
+  @Required()
+  teacherId: string;
 
   @Property()
   @Enum("active", "inactive")

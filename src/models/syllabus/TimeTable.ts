@@ -16,30 +16,39 @@ export class TimeTable {
   @Required()
   @Trim()
   day: string;
+  
+  @Property()
+  @Required()
+  classId: "";
 
   @Property()
   @Required()
-  @Trim()
+  subjectId: "";
+
+  @Property()
+  @Required()
+  teacherId: "";
+
+
+
+  @Property()
+  @Required()
   timeFrom: TimeRanges;
 
   @Property()
   @Required()
-  @Trim()
   timeTo: TimeRanges; 
 
   @Property()
   @Required()
-  @Trim()
   roomNumber: string; 
 
   @Property()
   @Required()
-  @Trim()
   mode: string; 
 
   @Property()
   @Required()
-  @Trim()
   position: number; 
 
   @Property()

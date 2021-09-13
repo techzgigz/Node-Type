@@ -25,9 +25,6 @@ export class Topic {
   lesson: Ref<Lesson>;
 
   @Property()
-  @Required()
-  @MinLength(3)
-  @MaxLength(50)
   @Trim()
   name: string;
 
@@ -45,20 +42,22 @@ export class Topic {
   @Property()
   @Default(false)
   completed: boolean;
+  
+  @Property()
+  @Required()
+  teacherId: string;
+
 
   @Property()
   @Required()
-  @Trim()
   note: string; 
 
   @Property()
   @Required()
-  @Trim()
   studyMaterial: []; 
 
   @Property()
   @Required()
-  @Trim()
   remark: string; 
 
   @Property()

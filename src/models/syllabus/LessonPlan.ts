@@ -1,6 +1,6 @@
-import { Model, ObjectID, Ref, Trim } from "@tsed/mongoose";
-import { Default, Enum, Groups, Property, Required } from "@tsed/schema";
-import{Topic} from "src/models/syllabus/Topic";
+import { Model, ObjectID, Ref, Trim, } from "@tsed/mongoose";
+import { Default, Enum, Groups, Property, Required, Format, } from "@tsed/schema";
+import { Topic } from "src/models/syllabus/Topic";
 
 @Model({ schemaOptions: { timestamps: true } })
 export class LessonPlan {
@@ -8,64 +8,85 @@ export class LessonPlan {
   @ObjectID("id")
   _id: string;
 
-  @Ref(Topic)
+
+  @Ref(() => Topic)
   @Required()
   topic: Ref<Topic>;
 
+
   @Property()
   @Required()
-  @Trim()
   subTopic: string;
 
+  @Required()
+  @Format("date")
+  startedAt: Date;
+
+
+
+  // @Format("Time")
+  // @Required()
+  // startTime: "time";
+
+  @Format("date")
+  @Required()
+  startTime: Date;
+
+  @Format("date")
+  @Required()
+  endtTime: Date;
+
+  // @Property()
+  // @Required()
+  // @Trim()
+  // startTime: TimeRanges;
+
+  // @Format("Time")
+  // @Required()
+  // endtTime: "time";
+
   @Property()
   @Required()
-  @Trim()
-  date: Date;
+  youTubeUrl: string;
+
+
+  @Property()
+  @Required()
+  Video: string;
+
+  @Property()
+  @Required()
+  document: [];
+
+  @Property()
+  @Required()
+  teachingMethod: string;
+
+  @Property()
+  @Required()
+  generalObjective: string;
+
+  @Property()
+  @Required()
+  previousKnowledge: string;
 
   @Property()
   @Required()
   @Trim()
-  startTime: TimeRanges; 
+  question: string;
 
   @Property()
   @Required()
-  @Trim()
-  endTime: TimeRanges; 
+  presentation:[" "];
 
   @Property()
   @Required()
-  @Trim()
-  youTubeUrl: string; 
+  teacherId: "";
+
 
   @Property()
   @Required()
-  @Trim()
-  document: []; 
-
-  @Property()
-  @Required()
-  @Trim()
-  teachingMethod: string; 
-
-  @Property()
-  @Required()
-  @Trim()
-  generalObjective: string; 
-
-  @Property()
-  @Required()
-  @Trim()
-  previousKnowledge: string; 
-
-  @Property()
-  @Required()
-  @Trim()
- question: string; 
-
- @Property()
-  @Required()
-  @Trim()
-  presentation: string; 
+  sedhuleId: "";
 
   @Property()
   @Enum("active", "inactive")
