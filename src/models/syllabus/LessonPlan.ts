@@ -1,6 +1,8 @@
 import { Model, ObjectID, Ref, Trim, } from "@tsed/mongoose";
 import { Default, Enum, Groups, Property, Required, Format, } from "@tsed/schema";
 import { Topic } from "src/models/syllabus/Topic";
+import { User } from "../users/User";
+
 
 @Model({ schemaOptions: { timestamps: true } })
 export class LessonPlan {
@@ -93,4 +95,7 @@ export class LessonPlan {
   @Default("active")
   status: string;
 
+  @Ref(User)
+  @Groups("!updation")
+  createdBy: Ref<User>;
 }

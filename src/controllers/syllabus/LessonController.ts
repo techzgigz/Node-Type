@@ -20,7 +20,8 @@ import {
   import { AcceptRoles } from "src/decorators/AcceptRoles";
   import{Lesson } from "src/models/syllabus/Lesson";
   import { LessonService } from "src/services/LessonService";
-  
+  import { User } from "src/models/users/User";
+
   @Controller("/lesson")
   export class LessonController {
     constructor(private lessonService: LessonService) {}
@@ -63,11 +64,18 @@ import {
     @Returns(201, Lesson)
     async createLesson(
       @Req() request: Req,
+      @Required()
+      @Description("User model")
+      @BodyParams("user")
+      @Groups("creation")
+      user: User,
       @Description("Lesson model")
       @BodyParams()
       @Groups("creation")
       data: Lesson
     ): Promise<Lesson> {
+       
+      
       if (request.user) {
         data = { ...data};
       }

@@ -11,6 +11,9 @@ import {
 import { Medium } from "../mediums/Medium";
 import { Grade} from "../grades/Grades";
 import {Subject} from "../subjects/Subject"
+import { User } from "../users/User";
+
+
 @Model({ schemaOptions: { timestamps: true } })
 export class Lesson {
   @Groups("!creation", "!updation")
@@ -45,4 +48,7 @@ export class Lesson {
   @Default("active")
   status: string;
 
+  @Ref(User)
+  @Groups("!updation")
+  createdBy: Ref<User>;
 }

@@ -1,6 +1,7 @@
 import { Model, ObjectID, Ref, Trim } from "@tsed/mongoose";
 import { Default, Enum, Groups, Property, Required } from "@tsed/schema";
 import{Lesson } from "src/models/syllabus/Lesson";
+import { User } from "../users/User";
 
 @Model({ schemaOptions: { timestamps: true } })
 export class TimeTable {
@@ -56,4 +57,7 @@ export class TimeTable {
   @Default("active")
   status: string;
 
+  @Ref(User)
+  @Groups("!updation")
+  createdBy: Ref<User>;
 }
