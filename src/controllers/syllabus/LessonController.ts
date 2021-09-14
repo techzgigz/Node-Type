@@ -21,6 +21,7 @@ import {
   import{Lesson } from "src/models/syllabus/Lesson";
   import { LessonService } from "src/services/LessonService";
   import { User } from "src/models/users/User";
+  import * as multer from 'multer'
 
   @Controller("/lesson")
   export class LessonController {
@@ -34,7 +35,7 @@ import {
     async getAllLesson(@Req() request: Req): Promise<Lesson[]> {
       let query = {};
       if ((request.user as any).role !== "superadmin") {
-        query = { _id: request.permissions?.readIds };
+        query = { _id: request.permissions.readIds };
       }
       return this.lessonService.query(query);
     }
@@ -50,7 +51,7 @@ import {
     ): Promise<Lesson | null> {
       if (
         (request.user as any).role !== "superadmin" &&
-        !request.permissions?.readIds?.includes(id)
+        !request.permissions.readIds.includes(id)
       ) {
         throw new Error("You don't have sufficient permissions");
       }

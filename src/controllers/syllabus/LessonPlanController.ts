@@ -33,7 +33,7 @@ export class LessonPlanController {
   async getAllLesson(@Req() request: Req): Promise<LessonPlan[]> {
     let query = {};
     if ((request.user as any).role !== "superadmin") {
-      query = { _id: request.permissions?.readIds };
+      query = { _id: request.permissions.readIds };
     }
     return this.lessonPlanService.query(query);
   }
@@ -49,7 +49,7 @@ export class LessonPlanController {
   ): Promise<LessonPlan | null> {
     if (
       (request.user as any).role !== "superadmin" &&
-      !request.permissions?.readIds?.includes(id)
+      !request.permissions.readIds.includes(id)
     ) {
       throw new Error("You don't have sufficient permissions");
     }
