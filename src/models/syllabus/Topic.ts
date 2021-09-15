@@ -13,6 +13,7 @@ import {
 
 } from "@tsed/schema";
 import{Lesson } from "src/models/syllabus/Lesson";
+import { User } from "../users/User";
 
 @Model({ schemaOptions: { timestamps: true } })
 export class Topic {
@@ -64,5 +65,10 @@ export class Topic {
   @Enum("active", "inactive")
   @Default("active")
   status: string;
+
+  @Ref(User)
+  @Groups("!updation")
+  createdBy: Ref<User>;
+
 
 }

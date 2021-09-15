@@ -1,46 +1,51 @@
 import { Service, Inject } from "@tsed/common";
 import { EventEmitterService } from "@tsed/event-emitter";
 import { MongooseModel } from "@tsed/mongoose";
+import { TimeTable } from "src/models/syllabus/TimeTable";
 import { Topic } from "src/models/syllabus/Topic";
 import { objectDefined } from "src/utils";
 import { EntityCreationUser } from "./PermissionsService";
 
 @Service()
 export class TimeTableService {
-  @Inject(Topic) private Topic: MongooseModel<TimeTable>;
+  @Inject(TimeTable) private timetable: MongooseModel<TimeTable>;
   @Inject() private eventEmitter: EventEmitterService;
 
-  async find(id: string): Promise<Topic | null> {
-    const topic = await this.TimeTable.findById(id).exec();
+  async find(id: string): Promise<TimeTable | null> {
+    const topic = await this.timetable.findById(id).exec();
     return topic;
   }
 
-  async save(data: TimeTable, user: EntityCreationUser): Promise<Topic> {
-    const topic = new this.Topic(data);
+  async save(data: TimeTable, user: EntityCreationUser): Promise<TimeTable> {
+    const topic = new this.timetable(data);
     await topic.save();
     this.eventEmitter.emit("entity.created", { user, moduleName: "Fee" });
     return topic;
   }
 
-//   async update(id: string, data: Lesson): Promise<Lesson | null> {
-//     const Lesson = await this.fee.findById(id).exec();
-//     if (Fee) {
-//       Fee.school = data.school;
-//       Fee.grade = data.grade;
-//       Fee.medium = data.medium;
-//       Fee.info = data.info;
-//       Fee.status = data.status;
-//       await Fee.save();
-//     }
-//     return Fee;
-//   }
+  async update(id: string, data: TimeTable): Promise<TimeTable | null> {
+    const TimeTable = await this.timetable.findById(id).exec();
+    if (TimeTable) {
+      TimeTable.day = data.day;
+      TimeTable.classId = data.classId;
+      // TimeTable.medium = data.medium;
+      TimeTable.subjectId = data.subjectId;
+      TimeTable.teacherId = data.teacherId;
+      TimeTable.roomNumber = data.roomNumber;
+      TimeTable.mode = data.mode;
+      TimeTable.position = data.position;
 
-  async query(options = {}): Promise<Topic[]> {
-    options = objectDefined(options);
-    return this.TimeTable.find(options).exec();
+      await TimeTable.save();
+    }
+    return TimeTable;
   }
 
-  async remove(id: string): Promise<Topic> {
-    return await this.TimeTable.findById(id).remove().exec();
+  async query(options = {}): Promise<TimeTable[]> {
+    options = objectDefined(options);
+    return this.timetable.find(options).populate("lesson").exec();
+
+  }
+  async remove(id: string): Promise<TimeTable> {
+    return await this.timetable.findById(id).remove().exec();
   }
 }

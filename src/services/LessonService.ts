@@ -22,22 +22,22 @@ export class LessonService {
     return Lesson;
   }
 
-//   async update(id: string, data: Lesson): Promise<Lesson | null> {
-//     const Lesson = await this.fee.findById(id).exec();
-//     if (Fee) {
-//       Fee.school = data.school;
-//       Fee.grade = data.grade;
-//       Fee.medium = data.medium;
-//       Fee.info = data.info;
-//       Fee.status = data.status;
-//       await Fee.save();
-//     }
-//     return Fee;
-//   }
+  async update(id: string, data: Lesson): Promise<Lesson | null> {
+    const lessons = await this.lesson.findById(id).exec();
+    if (lessons) {
+  //  lesson.grade = data.grade;
+     lessons.teacherId = data.teacherId;
+      lessons.medium = data.medium;
+      lessons. name = data.name;
+      lessons.status = data.status;
+      await lessons.save();
+    }
+    return lessons;
+  }
 
   async query(options = {}): Promise<Lesson[]> {
     options = objectDefined(options);
-    return this.lesson.find(options).exec();
+    return this.lesson.find(options).populate("medium").populate("subject").populate("grade").exec();
   }
 
   async remove(id: string): Promise<Lesson> {

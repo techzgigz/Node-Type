@@ -79,16 +79,16 @@ export class LessonPlan {
 
   @Property()
   @Required()
-  presentation:[" "];
+  presentation:[];
 
   @Property()
   @Required()
-  teacherId: "";
+  teacherId: string;
 
 
   @Property()
   @Required()
-  sedhuleId: "";
+  sedhuleId: string ;
 
   @Property()
   @Enum("active", "inactive")

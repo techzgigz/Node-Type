@@ -12,6 +12,8 @@ import {
 import { Medium } from "../mediums/Medium";
 import { Grade } from "../grades/Grades";
 import { Subject } from "../subjects/Subject"
+import { User } from "../users/User";
+
 import { Section } from "../sections/Section";
 @Model({ schemaOptions: { timestamps: true } })
 export class Content {
@@ -31,11 +33,11 @@ export class Content {
     contentType: string;
 
     @Property()
-    @Required()
+    //@Required()
     avilableFor: [];
 
     @Property()
-    @Required()
+    //@Required()
     class: [];
 
     @Ref(Section)
@@ -63,5 +65,9 @@ export class Content {
     @Enum("active", "inactive")
     @Default("active")
     status: string;
+
+    @Ref(User)
+  @Groups("!updation")
+  createdBy: Ref<User>;
 
 }

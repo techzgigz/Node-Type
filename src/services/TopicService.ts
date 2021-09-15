@@ -22,22 +22,25 @@ export class TopicService {
     return topic;
   }
 
-//   async update(id: string, data: Lesson): Promise<Lesson | null> {
-//     const Lesson = await this.fee.findById(id).exec();
-//     if (Fee) {
-//       Fee.school = data.school;
-//       Fee.grade = data.grade;
-//       Fee.medium = data.medium;
-//       Fee.info = data.info;
-//       Fee.status = data.status;
-//       await Fee.save();
-//     }
-//     return Fee;
-//   }
+  async update(id: string, data: Topic): Promise<Topic | null> {
+    const topic = await this.Topic.findById(id).exec();
+    if (topic) {
+      topic.name = data.name;
+      topic.progress = data.progress;
+      topic.date = data.date;
+      topic.completed = data.completed;
+      topic.status = data.status;
+      topic. teacherId = data. teacherId;
+      topic. note = data. note;
+      await topic.save();
+    }
+    return topic;
+  }
 
   async query(options = {}): Promise<Topic[]> {
     options = objectDefined(options);
-    return this.Topic.find(options).exec();
+  
+    return this.Topic.find(options).populate("lesson").populate("school").exec();
   }
 
   async remove(id: string): Promise<Topic> {
