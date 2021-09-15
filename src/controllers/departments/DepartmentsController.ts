@@ -39,7 +39,7 @@ export class DepartmentsController {
   async getAllDepartments(@Req() request: Req): Promise<Department[]> {
     let query = {};
     if ((request.user as any).role !== "superadmin") {
-      query = { _id: request.permissions.readIds };
+      query = { _id: request.permissions?.readIds };
     }
     return this.departmentsService.query(query);
   }
@@ -56,7 +56,7 @@ export class DepartmentsController {
   ): Promise<Department | null> {
     if (
       (request.user as any).role !== "superadmin" &&
-      !request.permissions.readIds.includes(id)
+      !request.permissions?.readIds?.includes(id)
     ) {
       throw new Error("You don't have sufficient permissions");
     }

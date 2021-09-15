@@ -39,7 +39,7 @@ export class FeesController {
   async getAllFees(@Req() request: Req): Promise<Fee[]> {
     let query = {};
     if ((request.user as any).role !== "superadmin") {
-      query = { _id: request.permissions.readIds };
+      query = { _id: request.permissions?.readIds };
     }
     return this.feesService.query(query);
   }
@@ -56,7 +56,7 @@ export class FeesController {
   ): Promise<Fee | null> {
     if (
       (request.user as any).role !== "superadmin" &&
-      !request.permissions.readIds.includes(id)
+      !request.permissions?.readIds?.includes(id)
     ) {
       throw new Error("You don't have sufficient permissions");
     }

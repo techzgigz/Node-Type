@@ -43,7 +43,7 @@ export class GradesSubjectsController {
   async getAllGradesSubjects(@Req() request: Req): Promise<GradeSubject[]> {
     let query = {};
     if ((request.user as any).role !== "superadmin") {
-      query = { _id: request.permissions.readIds };
+      query = { _id: request.permissions?.readIds };
     }
     return this.gradesSubjectsService.query(query);
   }
@@ -60,7 +60,7 @@ export class GradesSubjectsController {
   ): Promise<GradeSubject | null> {
     if (
       (request.user as any).role !== "superadmin" &&
-      !request.permissions.readIds.includes(id)
+      !request.permissions?.readIds?.includes(id)
     ) {
       throw new Error("You don't have sufficient permissions");
     }
