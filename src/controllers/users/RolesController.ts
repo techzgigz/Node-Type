@@ -35,7 +35,7 @@ export class RolesController {
   async getAllRole(@Req() request: Req): Promise<Role[]> {
     let query = {};
     if ((request.user as any).role !== "superadmin") {
-      query = { _id: request.permissions?.readIds };
+      query = { _id: request.permissions.readIds };
     }
     return this.rolesService.query(query);
   }
@@ -52,7 +52,7 @@ export class RolesController {
   ): Promise<Role | null> {
     if (
       (request.user as any).role !== "superadmin" &&
-      !request.permissions?.readIds?.includes(id)
+      !request.permissions.readIds.includes(id)
     ) {
       throw new Error("You don't have sufficient permissions");
     }

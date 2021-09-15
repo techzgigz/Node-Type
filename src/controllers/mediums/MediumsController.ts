@@ -39,7 +39,7 @@ export class MediumsController {
   async getAllMediums(@Req() request: Req): Promise<Medium[]> {
     let query = {};
     if ((request.user as any).role !== "superadmin") {
-      query = { _id: request.permissions?.readIds };
+      query = { _id: request.permissions.readIds };
     }
     return this.mediumsService.query(query);
   }
@@ -56,7 +56,7 @@ export class MediumsController {
   ): Promise<Medium | null> {
     if (
       (request.user as any).role !== "superadmin" &&
-      !request.permissions?.readIds?.includes(id)
+      !request.permissions.readIds.includes(id)
     ) {
       throw new Error("You don't have sufficient permissions");
     }
@@ -77,7 +77,8 @@ export class MediumsController {
     data: Medium
   ): Promise<Medium> {
     const user = await this.usersService.find(data.createdBy.toString());
-    if (!user || user.role === "superadmin") {
+    console.log(user)
+    if (!user || user.role === "superadmins") {
       throw new Error(
         `User with id: ${data.createdBy} doesn't exist or is superadmin, use other role.`
       );

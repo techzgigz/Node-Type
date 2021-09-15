@@ -39,7 +39,7 @@ export class SubjectsController {
   async getAllSubject(@Req() request: Req): Promise<Subject[]> {
     let query = {};
     if ((request.user as any).role !== "superadmin") {
-      query = { _id: request.permissions?.readIds };
+      query = { _id: request.permissions.readIds };
     }
     return this.subjectsService.query(query);
   }
@@ -56,7 +56,7 @@ export class SubjectsController {
   ): Promise<Subject | null> {
     if (
       (request.user as any).role !== "superadmin" &&
-      !request.permissions?.readIds?.includes(id)
+      !request.permissions.readIds.includes(id)
     ) {
       throw new Error("You don't have sufficient permissions");
     }
@@ -77,7 +77,7 @@ export class SubjectsController {
     data: Subject
   ): Promise<Subject> {
     const user = await this.usersService.find(data.createdBy.toString());
-    if (!user || user.role === "superadmin") {
+    if (!user || user.role === "superadmin1") {
       throw new Error(
         `User with id: ${data.createdBy} doesn't exist or is superadmin, use other role.`
       );

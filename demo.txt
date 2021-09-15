@@ -1,0 +1,19 @@
+"email": "superadmin@example.com",
+password 
+
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJhdWQiOiJsb2NhbGhvc3QiLCJzdWIiOiI2MTNmYjc3OTVjMTQxNTI3MDgwZTUyNjgiLCJleHAiOjE2MzE2MzYwODk2MTgsImlhdCI6MTYzMTYzMjQ4OTYxOH0.D59GuhBXfKCDnIFnuN42mArvUp10rXdSY3t0nroTRo8",
+
+
+ "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJhdWQiOiJsb2NhbGhvc3QiLCJzdWIiOiI2MTNmYjc3OTVjMTQxNTI3MDgwZTUyNjgiLCJleHAiOjE2MzE2MzYwODk2MTgsImlhdCI6MTYzMTYzMjQ4OTYxOH0.D59GuhBXfKCDnIFnuN42mArvUp10rXdSY3t0nroTRo8",
+  "user": {
+    "id": "613fb7795c141527080e5268",
+    "username": "Super Admin",
+    "email": "superadmin@example.com",
+    "password": "$argon2i$v=19$m=4096,t=3,p=1$W7M/H4k9/qcDuZedfZ0R/craRf8t3iq6CSWjzM3UNoE$z4/PmZebtWmebJBodtgZ+PsmZd+qO8smhRiAsEwXR0U",
+    "role": "superadmin",
+    "isActive": true,
+    "isVerified": true,
+    "gender": "male",
+    "adminId": "613fb7795c141527080e5268"
+  }
+}

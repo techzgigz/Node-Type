@@ -46,7 +46,7 @@ export class SchoolsController {
   async getAllSchools(@Req() request: Req): Promise<School[]> {
     let query = {};
     if ((request.user as any).role !== "superadmin") {
-      query = { _id: request.permissions?.readIds };
+      query = { _id: request.permissions.readIds };
     }
     return this.schoolsService.query(query);
   }
@@ -63,7 +63,7 @@ export class SchoolsController {
   ): Promise<School[]> {
     if (
       (request.user as any).role !== "superadmin" &&
-      !request.permissions?.readIds?.includes(id)
+      !request.permissions.readIds.includes(id)
     ) {
       throw new Error("You don't have sufficient permissions");
     }
@@ -97,8 +97,8 @@ export class SchoolsController {
     }
     if (user.role) {
       const role = await this.rolesService.findOne({ name: user.role });
-      if (role?._id) {
-        user.roleId = role?._id;
+      if (role._id) {
+        user.roleId = role._id;
       }
     }
     if (request.user) {
@@ -155,7 +155,7 @@ export class SchoolsController {
   ): Promise<string[]> {
     if (
       (request.user as any).role !== "superadmin" &&
-      !request.permissions?.readIds?.includes(id)
+      !request.permissions.readIds.includes(id)
     ) {
       throw new Error("You don't have sufficient permissions");
     }
@@ -174,7 +174,7 @@ export class SchoolsController {
               createdBy: school.createdBy,
             },
             {
-              role: user?.role || (request.user as any).role,
+              role: user.role || (request.user as any).role,
               _id: school.createdBy.toString(),
               adminId: school.createdBy,
             }

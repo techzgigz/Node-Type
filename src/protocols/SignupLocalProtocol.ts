@@ -49,8 +49,8 @@ export class SignupLocalProtocol implements OnVerify, OnInstall {
     }
     if (user.role) {
       const role = await this.rolesService.findOne({ name: user.role });
-      if (role?._id) {
-        user.roleId = role?._id;
+      if (role._id) {
+        user.roleId = role._id;
       }
     }
     return this.usersService.save(user);

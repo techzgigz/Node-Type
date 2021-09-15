@@ -34,7 +34,7 @@ export class UsersController {
   async getAllUsers(@Req() request: Req): Promise<User[]> {
     let query = {};
     if ((request.user as any).role !== "superadmin") {
-      query = { _id: request.permissions?.readIds };
+      query = { _id: request.permissions.readIds };
     }
     return this.usersService.query(query);
   }
@@ -52,7 +52,7 @@ export class UsersController {
   ): Promise<User | null> {
     if (
       (request.user as any).role !== "superadmin" &&
-      !request.permissions?.readIds?.includes(id)
+      !request.permissions.readIds.includes(id)
     ) {
       throw new Error("You don't have sufficient permissions");
     }
@@ -90,8 +90,8 @@ export class UsersController {
     }
     if (data.role) {
       const role = await this.rolesService.findOne({ name: data.role });
-      if (role?._id) {
-        data.roleId = role?._id;
+      if (role._id) {
+        data.roleId = role._id;
       }
     }
     // if(photo.filename) {
