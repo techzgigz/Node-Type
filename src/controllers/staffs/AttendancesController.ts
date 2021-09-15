@@ -33,7 +33,7 @@ export class StaffsController {
   async getAllStaffs(@Req() request: Req): Promise<Staff[]> {
     let query = {};
     if ((request.user as any).role !== "superadmin") {
-      query = { _id: request.permissions?.readIds };
+      query = { _id: request.permissions.readIds };
     }
     return this.staffsService.query(query);
   }
@@ -49,7 +49,7 @@ export class StaffsController {
   ): Promise<Staff | null> {
     if (
       (request.user as any).role !== "superadmin" &&
-      !request.permissions?.readIds?.includes(id)
+      !request.permissions.readIds.includes(id)
     ) {
       throw new Error("You don't have sufficient permissions");
     }

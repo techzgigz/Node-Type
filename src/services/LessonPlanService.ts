@@ -22,22 +22,30 @@ export class LessonPlanService {
     return lessonPlan;
   }
 
-//   async update(id: string, data: lessonPlan): Promise<lessonPlan | null> {
-//     const lessonPlan = await this.fee.findById(id).exec();
-//     if (Fee) {
-//       Fee.school = data.school;
-//       Fee.grade = data.grade;
-//       Fee.medium = data.medium;
-//       Fee.info = data.info;
-//       Fee.status = data.status;
-//       await Fee.save();
-//     }
-//     return Fee;
-//   }
+  async update(id: string, data: LessonPlan): Promise<LessonPlan | null> {
+    const lessonplan = await this.LessonPlan.findById(id).exec();
+    if (lessonplan) {
+      lessonplan.subTopic = data.subTopic;
+      lessonplan.topic = data.topic;
+      lessonplan.startedAt = data.startedAt;
+      lessonplan.startTime = data.startTime;
+      lessonplan.status = data.status;
+      lessonplan.youTubeUrl = data.youTubeUrl;
+      lessonplan.document = data.document;
+      lessonplan.teachingMethod = data.teachingMethod;
+      lessonplan.generalObjective = data.generalObjective;
+      lessonplan.previousKnowledge = data.previousKnowledge;
+      lessonplan.question = data.question;
+      lessonplan.presentation = data.presentation;
+      lessonplan.sedhuleId = data.sedhuleId;
+      await lessonplan.save();
+    }
+    return lessonplan;
+  }
 
   async query(options = {}): Promise<LessonPlan[]> {
     options = objectDefined(options);
-    return this.LessonPlan.find(options).exec();
+    return this.LessonPlan.find(options).populate("topic").exec();
   }
 
   async remove(id: string): Promise<LessonPlan> {

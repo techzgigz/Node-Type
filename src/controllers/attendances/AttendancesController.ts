@@ -40,7 +40,7 @@ export class AttendancesController {
   async getAllAttendances(@Req() request: Req): Promise<Attendance[]> {
     let query = {};
     if ((request.user as any).role !== "superadmin") {
-      query = { _id: request.permissions?.readIds };
+      query = { _id: request.permissions.readIds };
     }
     return this.attendancesService.query(query);
   }
@@ -57,7 +57,7 @@ export class AttendancesController {
   ): Promise<Attendance | null> {
     if (
       (request.user as any).role !== "superadmin" &&
-      !request.permissions?.readIds?.includes(id)
+      !request.permissions.readIds.includes(id)
     ) {
       throw new Error("You don't have sufficient permissions");
     }

@@ -9,9 +9,9 @@ export class TimeTable {
   @ObjectID("id")
   _id: string;
 
-//   @Ref(Lesson)
-//   @Required()
-//   lesson: Ref<Lesson>;
+  @Ref(Lesson)
+  @Required()
+  lesson: Ref<Lesson>;
 
   @Property()
   @Required()
